@@ -47,7 +47,7 @@ img {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 50%;
+  width: 20%;
   border-radius: 100%;
   box-shadow: 0px 3px 5px 1px rgba(0,0,0,0.75);
 }
@@ -79,4 +79,8 @@ form {
   height: 100%;
   width: 100%;
   box-shadow: 3px 3px 3px 0px rgba(0,0,0,0.75);
+}
+
+.resultlist {
+
 }
