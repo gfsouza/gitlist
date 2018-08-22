@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import GitSearch from './GitSearch.js'
+import GitSearch from './../GitSearch.js';
+import Users from './../Users/Users.js';
 
 class App extends Component {
   render() {
