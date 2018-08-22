@@ -57,17 +57,21 @@ handleSubmit(e) {
   displayUser(user) {
     return (
       <div className="results">
-        <p className="userInfo">{user.name}</p>
         <img src={user.avatar_url} alt="user avatar"/>
+        <p className="userInfo">Username: {user.name}</p>
         <p className="followerInfo">Followers: {user.followers}</p>
         <p className="followingInfo">Following: {user.following}</p>
+        <div className="repos">
+          <p>Repositorios</p>
+          <div className="repoList">
+            {this.state.repos && this.displayUserRepos(this.state.repos)}
+          </div>
+        </div>
       </div>
     )
   }
 
   render() {
-    const {user, repos} = this.state
-
     return (
       <div className="GitSearch container">
         <div className="col-md-8">
@@ -81,8 +85,10 @@ handleSubmit(e) {
           </form>
 
           <div className="Search-body">
-            {user && this.displayUser(user)}
-            {repos && this.displayUserRepos(repos)}
+            {this.state.user && this.displayUser(this.state.user)}
+            <div>
+
+            </div>
           </div>
         </div>
       </div>
