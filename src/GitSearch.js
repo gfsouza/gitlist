@@ -24,6 +24,18 @@ getUser(username) {
     });
 }
 
+getUserRepos(username) {
+    axios.get(`https://api.github.com/users/${username}/repos`)
+    .then(response => {
+       this.setState({
+         repos: response.data
+     });
+   })
+   .catch(error => {
+        console.log(error);
+   });
+}
+
 handleSubmit(e) {
     e.preventDefault()
 
@@ -34,19 +46,26 @@ handleSubmit(e) {
     this.setState({user, repos})
   }
 
+  displayUserRepos(repos) {
+    return repos.map(repository => {
+      return <div key={repository.id} className="repoResults">
+        <a href={repository.html_url}> {repository.name} </a>
+      </div>
+    })
+  }
+
   displayUser(user) {
     return (
       <div className="results">
         <img src={user.avatar_url} alt="user avatar"/>
-        <div className="userInfo">
-          <p>Username: {user.name}</p>
-          <p>Followers: {user.followers}</p>
-          <p>Following: {user.following}</p>
-          <div className="repos">
-            <p>Repositories</p>
-            <div className="repoList">
-              {this.state.repos && this.displayUserRepos(this.state.repos)}
-            </div>
+        <div className="userInfo"></div>
+        <p className=""></p>Username: {user.name}</p>
+        <p className="followerInfo">Followers: {user.followers}</p>
+        <p className="followingInfo">Following: {user.following}</p>
+        <div className="repos">
+          <p>Repositorios</p>
+          <div className="repoList">
+            {this.state.repos && this.displayUserRepos(this.state.repos)}
           </div>
         </div>
       </div>
@@ -68,6 +87,9 @@ handleSubmit(e) {
 
           <div className="Search-body">
             {this.state.user && this.displayUser(this.state.user)}
+            <div>
+
+            </div>
           </div>
         </div>
       </div>
@@ -75,5 +97,3 @@ handleSubmit(e) {
   }
 
 }
-
-ReactDOM.render(<GitSearch />, document.getElementById('root'));
