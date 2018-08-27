@@ -8,8 +8,8 @@ import Typography from '@material-ui/core/Typography';
 export const User = props => {
   const {user} = props;
   return (
-    <div>
-      <Card className={user.card}>
+    <div className="userInfo">
+      <Card className={user.card} style={{padding: 5}}>
           <CardMedia
             style={{height: 0, paddingTop: '50.25%', backgroundSize: 'contain', }}
             image={user.avatar_url}
@@ -17,18 +17,23 @@ export const User = props => {
           />
         <CardContent>
           <Typography
-            gutterBottom variant="headline" align="center">
+            gutterBottom variant="title" align="center">
             Username: {user.name}
           </Typography>
           <div style={{display:"flex", justifyContent:"space-evenly"}}>
-            <Typography
-              gutterBottom variant="headline" flexalign="center">
-              Followers: { user.followers }   Following: { user.following }
+            <Typography gutterBottom variant="subheading" >
+              Followers: { user.followers }
+            </Typography>
+            <Typography gutterBottom variant="subheading" >
+              Following: { user.following }
+            </Typography>
+            <Typography gutterBottom variant="subheading" >
+              Public Repos: { user.public_repos }
             </Typography>
           </div>
         </CardContent>
+        <Repos user={user}/>
       </Card>
-      <Repos user={user}/>
     </div>
   )
 }

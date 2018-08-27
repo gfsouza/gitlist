@@ -1,18 +1,47 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ViewList from '@material-ui/icons/ViewList';
+import Folder from '@material-ui/icons/Folder';
+import ExpandLess from '@material-ui/icons/ExpandLess';
+import ExpandMore from '@material-ui/icons/ExpandMore';
+import ListItemText from '@material-ui/core/ListItemText';
+import Collapse from '@material-ui/core/Collapse';
+import { withStyles } from '@material-ui/core/styles';
+import OpenInNew from '@material-ui/icons/OpenInNew';
 
-export default class Repos extends Component {
+const styles = theme => ({
+  root: {
+    maxWidth: 310,
+    width: '100%',
+    backgroundColor: theme.palette.background.paper,
+    margin: '0 auto',
+  },
+  nested: {
+    maxWidth: '100%',
+    paddingLeft: theme.spacing.unit * 4,
+    display: 'flex',
+    flexDirection: 'column',
+    maxHeight: 275,
+    overflow: 'auto',
+  },
+});
 
+class Repos extends Component {
   state = {
-    repos: []
+    repos: [],
+    open: true,
   };
 
+  handleClick = () => {
+    this.setState(state => ({ open: !state.open }));
+  }
+
   getUserRepos() {
-    const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos`;
+    const auth = `?access_token=869441d755b7efb3bb1adfdae170b87ead2e2550`;
+    const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos${auth}`;
     axios.get(apiUrl)
       .then(response => {
         this.setState({
@@ -42,17 +71,52 @@ export default class Repos extends Component {
       this.getUserRepos();
   };
 
+  renderRepos() {
+    return this.state.repos.map(this.renderReposList)
+  }
+
+  renderReposList(repository, i) {
+    return <div key={repository.id} className="repo-listItems">
+    <List>
+      <ListItem component="a" target="_blank" href={repository.html_url} button>
+        {repository.name }
+        <ListItemIcon>
+          <OpenInNew />
+        </ListItemIcon>
+      </ListItem>
+    </List>
+  </div>
+  }
+
   render() {
-    const listItems = this.state.repos.map(repository => (
-      <List key={repository.id}>
-        <ListItem component="a" target="_blank" href={repository.html_url} button>
+    const { classes } = this.props;
+
+    return(
+      <div className={classes.root}>
+      <List component="nav" style={{width:'100%'}}>
+        <ListItem button onClick={this.handleClick}>
           <ListItemIcon>
-            <ViewList />
+            <Folder />
           </ListItemIcon>
-          {repository.name}
+          <ListItemText inset primary={'Repositories' + ' ' + '(' + this.props.user.public_repos + ')'} />
+          {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
+
+        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem button className={classes.nested}>
+              {this.renderRepos()}
+            </ListItem>
+          </List>
+        </Collapse>
       </List>
-    ));
-    return <div>{listItems}</div>;
+      </div>
+    );
   }
 }
+
+Repos.propTypes = {
+  classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Repos);
