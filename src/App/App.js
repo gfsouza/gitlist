@@ -13,7 +13,7 @@ export default class App extends Component {
   };
 
   getUser() {
-    const auth = `?access_token=ac2d45eaef2c034a75a4b6745fc977753633d980`;
+    const auth = `?access_token=52726f825d7badfcfc72f2f2f7b4e1819f3c898c`;
     const username = this.username.value
     const apiUrl = `https://api.github.com/users/${username}${auth}`;
     this.setState({ loading: true });

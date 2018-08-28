@@ -14,14 +14,13 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 
 const styles = theme => ({
   root: {
-    maxWidth: 310,
+    maxWidth: '93vw',
     width: '100%',
     backgroundColor: theme.palette.background.paper,
     margin: '0 auto',
   },
   nested: {
-    maxWidth: '100%',
-    paddingLeft: theme.spacing.unit * 4,
+    width: '100%',
     display: 'flex',
     flexDirection: 'column',
     maxHeight: 275,
@@ -40,7 +39,7 @@ class Repos extends Component {
   }
 
   getUserRepos() {
-    const auth = `?access_token=ac2d45eaef2c034a75a4b6745fc977753633d980`;
+    const auth = `?access_token=52726f825d7badfcfc72f2f2f7b4e1819f3c898c`;
     const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos${auth}`;
     axios.get(apiUrl)
       .then(response => {
@@ -73,14 +72,12 @@ class Repos extends Component {
 
   renderReposList(repository, i) {
     return <div key={repository.id} className="repo-listItems">
-      <List>
         <ListItem component="a" target="_blank" href={repository.html_url} button>
-          {repository.name }
+          <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
           <ListItemIcon>
             <OpenInNew />
           </ListItemIcon>
         </ListItem>
-      </List>
     </div>
   }
 
@@ -94,7 +91,7 @@ class Repos extends Component {
             <ListItemIcon>
               <Folder />
             </ListItemIcon>
-            <ListItemText inset primary={`Repositories (${this.props.user.public_repos})`} />
+            <ListItemText style={{textAlign:'center'}} inset primary={`Repositories (${this.props.user.public_repos})`} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
 
