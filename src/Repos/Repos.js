@@ -40,7 +40,7 @@ class Repos extends Component {
   }
 
   getUserRepos() {
-    const auth = `?access_token=869441d755b7efb3bb1adfdae170b87ead2e2550`;
+    const auth = `?access_token=ac2d45eaef2c034a75a4b6745fc977753633d980`;
     const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos${auth}`;
     axios.get(apiUrl)
       .then(response => {
@@ -71,21 +71,17 @@ class Repos extends Component {
       this.getUserRepos();
   };
 
-  renderRepos() {
-    return this.state.repos.map(this.renderReposList)
-  }
-
   renderReposList(repository, i) {
     return <div key={repository.id} className="repo-listItems">
-    <List>
-      <ListItem component="a" target="_blank" href={repository.html_url} button>
-        {repository.name }
-        <ListItemIcon>
-          <OpenInNew />
-        </ListItemIcon>
-      </ListItem>
-    </List>
-  </div>
+      <List>
+        <ListItem component="a" target="_blank" href={repository.html_url} button>
+          {repository.name }
+          <ListItemIcon>
+            <OpenInNew />
+          </ListItemIcon>
+        </ListItem>
+      </List>
+    </div>
   }
 
   render() {
@@ -93,19 +89,19 @@ class Repos extends Component {
 
     return(
       <div className={classes.root}>
-      <List component="nav" style={{width:'100%'}}>
-        <ListItem button onClick={this.handleClick}>
-          <ListItemIcon>
-            <Folder />
-          </ListItemIcon>
-          <ListItemText inset primary={'Repositories' + ' ' + '(' + this.props.user.public_repos + ')'} />
+        <List component="nav" style={{width:'100%'}}>
+          <ListItem button onClick={this.handleClick}>
+            <ListItemIcon>
+              <Folder />
+            </ListItemIcon>
+            <ListItemText inset primary={`Repositories (${this.props.user.public_repos})`} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
 
         <Collapse in={this.state.open} timeout="auto" unmountOnExit>
           <List component="div" disablePadding>
             <ListItem button className={classes.nested}>
-              {this.renderRepos()}
+              {this.state.repos.map(this.renderReposList)}
             </ListItem>
           </List>
         </Collapse>

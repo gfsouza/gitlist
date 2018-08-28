@@ -10,17 +10,16 @@ export const User = props => {
   return (
     <div className="userInfo">
       <Card className={user.card} style={{padding: 5}}>
-          <CardMedia
-            style={{height: 0, paddingTop: '50.25%', backgroundSize: 'contain', }}
-            image={user.avatar_url}
-            title="User Avatar"
-          />
+        <CardMedia
+          style={{height: 0, paddingTop: '50.25%', backgroundSize: 'contain', }}
+          image={user.avatar_url}
+          title="User Avatar"
+        />
         <CardContent>
-          <Typography
-            gutterBottom variant="title" align="center">
+          <Typography gutterBottom variant="title" align="center">
             Username: {user.name}
           </Typography>
-          <div style={{display:"flex", justifyContent:"space-evenly"}}>
+          <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
             <Typography gutterBottom variant="subheading" >
               Followers: { user.followers }
             </Typography>
