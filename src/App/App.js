@@ -13,7 +13,7 @@ export default class App extends Component {
   };
 
   getUser() {
-    const auth = `?access_token=52726f825d7badfcfc72f2f2f7b4e1819f3c898c`;
+    const auth = `?access_token=e71a4d238b868a7da6fc8e0a3403cce161ee93a5`;
     const username = this.username.value
     const apiUrl = `https://api.github.com/users/${username}${auth}`;
     this.setState({ loading: true });
@@ -50,8 +50,7 @@ export default class App extends Component {
   render() {
     const { user, loading } = this.state;
     return (
-      <div className="GitSearch container">
-        <div className="col-md-8">
+      <div className="container">
           <header className="Search-header">
             <h1>Github<br></br>User Search</h1>
           </header>
@@ -62,8 +61,6 @@ export default class App extends Component {
               <SearchIcon />
             </IconButton>
           </form>
-
-        </div>
         {loading ? <LoadingSpinner /> : user.id != null ? <User user={user} /> : <span></span>}
       </div>
     )

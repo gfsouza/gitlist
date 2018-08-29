@@ -25,6 +25,7 @@ const styles = theme => ({
     flexDirection: 'column',
     maxHeight: 275,
     overflow: 'auto',
+    margin: '0 auto',
   },
 });
 
@@ -39,7 +40,7 @@ class Repos extends Component {
   }
 
   getUserRepos() {
-    const auth = `?access_token=52726f825d7badfcfc72f2f2f7b4e1819f3c898c`;
+    const auth = `?access_token=e71a4d238b868a7da6fc8e0a3403cce161ee93a5`;
     const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos${auth}`;
     axios.get(apiUrl)
       .then(response => {
@@ -91,7 +92,7 @@ class Repos extends Component {
             <ListItemIcon>
               <Folder />
             </ListItemIcon>
-            <ListItemText style={{textAlign:'center'}} inset primary={`Repositories (${this.props.user.public_repos})`} />
+            <ListItemText style={{textAlign:'center'}} inset primary={`Public Repos (${this.props.user.public_repos})`} />
           {this.state.open ? <ExpandLess /> : <ExpandMore />}
         </ListItem>
 

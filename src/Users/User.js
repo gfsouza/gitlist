@@ -11,23 +11,20 @@ export const User = props => {
     <div className="userInfo">
       <Card className={user.card} style={{padding: 5}}>
         <CardMedia
-          style={{height: 0, paddingTop: '50.25%', backgroundSize: 'contain', }}
+          style={{height: 0, paddingTop: '34.25%', backgroundSize: 'contain', }}
           image={user.avatar_url}
           title="User Avatar"
         />
         <CardContent>
           <Typography gutterBottom variant="title" align="center">
-            Username: {user.name}
+            {user.name}
           </Typography>
-          <div style={{display:"flex", flexDirection:"column", alignItems:"center"}}>
+          <div style={{display:"flex", flexDirection:"row", justifyContent:"space-evenly"}}>
             <Typography gutterBottom variant="subheading" >
               Followers: { user.followers }
             </Typography>
             <Typography gutterBottom variant="subheading" >
               Following: { user.following }
-            </Typography>
-            <Typography gutterBottom variant="subheading" >
-              Public Repos: { user.public_repos }
             </Typography>
           </div>
         </CardContent>

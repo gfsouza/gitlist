@@ -79,6 +79,8 @@ form {
   display:flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  max-width: 60vh;
 }
 
 .repo-listItems, .repo-listItems a {
@@ -90,4 +92,8 @@ form {
 
 .repo-listItems a {
   border-bottom: inset rgba(0, 0, 0, 0.2);
+}
+
+.userInfo {
+  width: 100%;
 }
