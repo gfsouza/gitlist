@@ -1,0 +1,22 @@
+.userInfo {
+  width: 100%;
+}
+
+.userCard {
+  padding: 2%;
+}
+
+.userAvatar {
+  height: 100%;
+  width: 35%;
+  padding-top: 34.25%;
+  border-radius: 100%;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+.userSubheading {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+}

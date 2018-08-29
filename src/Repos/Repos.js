@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import './Repos.css'
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
@@ -40,8 +41,8 @@ class Repos extends Component {
   }
 
   getUserRepos() {
-    const auth = `?access_token=e71a4d238b868a7da6fc8e0a3403cce161ee93a5`;
-    const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos${auth}`;
+    // const auth = `?access_token=GITHUB_TOKEN`;
+    const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos`;
     axios.get(apiUrl)
       .then(response => {
         this.setState({
