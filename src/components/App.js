@@ -4,7 +4,7 @@ import SearchIcon from '@material-ui/icons/Search';
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
-import { apiUser, apiRepo } from './../actions/actions';
+import { apiUser } from '../actions/user-actions';
 import { bindActionCreators } from 'redux';
 import User from './User';
 
@@ -53,14 +53,12 @@ class App extends Component {
 const mapActionsToProps = (dispatch, props) => {
   return bindActionCreators({
   onFetchUser: apiUser,
-  onFetchRepo: apiRepo
   }, dispatch)
 };
 
 const mapStateToProps = (state, props) => {
   return {
     user: state.user,
-    repo: state.repo,
   }
 };
 

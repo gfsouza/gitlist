@@ -9,7 +9,9 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import { withStyles } from '@material-ui/core/styles';
-import OpenInNew from '@material-ui/icons/OpenInNew';
+import { apiRepo } from '../actions/repo-actions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const styles = theme => ({
   root: {
@@ -29,30 +31,22 @@ const styles = theme => ({
 });
 
 class Repos extends Component {
+  state = {
+    open: true
+  }
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
   }
 
   componentDidMount = () => {
-    this.getUserRepos();
+    this.onFetchRepo();
   };
 
   componentDidUpdate = (prevProps) => {
     if (this.props.user.login !== prevProps.user.login)
-      this.getUserRepos();
+      this.onFetchRepo();
   };
-
-  renderReposList(repository, i) {
-    return <div key={repository.id} className="repo-listItems">
-      <ListItem component="a" target="_blank" href={repository.html_url} button>
-        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
-        <ListItemIcon>
-          <OpenInNew />
-        </ListItemIcon>
-      </ListItem>
-    </div>
-  }
 
   render() {
     const { classes } = this.props;
@@ -71,7 +65,7 @@ class Repos extends Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className={classes.nested}>
-                {this.state.repos.map(this.renderReposList)}
+                {this.props.repos.map(this.renderReposList)}
               </ListItem>
             </List>
           </Collapse>
@@ -84,5 +78,19 @@ class Repos extends Component {
 Repos.propTypes = {
   classes: PropTypes.object.isRequired,
 };
+
+const mapActionsToProps = (dispatch, props) => {
+  return bindActionCreators({
+  onFetchRepo: apiRepo,
+  }, dispatch)
+};
+
+const mapStateToProps = (state, props) => {
+  return {
+    repo: state.repo,
+  }
+};
+
+export const RepoConnect = connect(mapStateToProps, mapActionsToProps)(Repos);
 
 export default withStyles(styles)(Repos);

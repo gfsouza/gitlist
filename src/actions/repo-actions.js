@@ -1,35 +1,8 @@
-import { FETCH_USER, FETCH_REPO } from './types';
+import { FETCH_REPO } from './types';
 import axios from 'axios';
+import RepoConnect from './../components/Repos';
 
 const apiUrl = 'https://api.github.com/users/';
-
-export function fetchUser(user) {
-    return {
-        type: FETCH_USER,
-        user: user
-    }
-};
-
-export const apiUser = user => {
-  return (dispatch) => {
-    return axios.get(`${apiUrl}${user}`)
-    .then(response => {
-      dispatch(fetchUser(response.data));
-    })
-    .catch(function(error) {
-      if (error.response) {
-        console.log(error.response.data);
-        console.log(error.response.status);
-        console.log(error.response.headers);
-      } else if (error.request) {
-        console.log(error.request);
-      } else {
-        console.log('Error', error.message);
-      }
-      console.log(error.config);
-    });
-  };
-};
 
 export function fetchRepo(user) {
     return {
@@ -57,4 +30,15 @@ export function fetchRepo(user) {
         console.log(error.config);
       });
     };
+  };
+
+  export const renderReposList = (repository, i) => {
+    return <div key={repository.id} className="repo-listItems">
+      <ListItem component="a" target="_blank" href={repository.html_url} button>
+        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
+        <ListItemIcon>
+          <OpenInNew />
+        </ListItemIcon>
+      </ListItem>
+    </div>
   };
