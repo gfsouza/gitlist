@@ -1,10 +1,9 @@
 import React from 'react';
-import Repos from './../Repos/Repos';
+import Repos from './Repos';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
-import './Users.css'
 
 export const User = props => {
   const {user} = props;

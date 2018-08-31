@@ -1,6 +1,4 @@
 import React, { Component } from 'react';
-import './Repos.css'
-import axios from 'axios';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -31,36 +29,9 @@ const styles = theme => ({
 });
 
 class Repos extends Component {
-  state = {
-    repos: [],
-    open: true,
-  };
 
   handleClick = () => {
     this.setState(state => ({ open: !state.open }));
-  }
-
-  getUserRepos() {
-    // const auth = `?access_token=GITHUB_TOKEN`;
-    const apiUrl = `https://api.github.com/users/${this.props.user.login}/repos`;
-    axios.get(apiUrl)
-      .then(response => {
-        this.setState({
-          repos: response.data
-        });
-      })
-      .catch(function(error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
   }
 
   componentDidMount = () => {
@@ -74,18 +45,18 @@ class Repos extends Component {
 
   renderReposList(repository, i) {
     return <div key={repository.id} className="repo-listItems">
-        <ListItem component="a" target="_blank" href={repository.html_url} button>
-          <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
-          <ListItemIcon>
-            <OpenInNew />
-          </ListItemIcon>
-        </ListItem>
+      <ListItem component="a" target="_blank" href={repository.html_url} button>
+        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
+        <ListItemIcon>
+          <OpenInNew />
+        </ListItemIcon>
+      </ListItem>
     </div>
   }
 
   render() {
     const { classes } = this.props;
-
+    
     return(
       <div className={classes.root}>
         <List component="nav" style={{width:'100%'}}>
@@ -94,17 +65,17 @@ class Repos extends Component {
               <Folder />
             </ListItemIcon>
             <ListItemText style={{textAlign:'center'}} inset primary={`Public Repos (${this.props.user.public_repos})`} />
-          {this.state.open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
+            {this.state.open ? <ExpandLess /> : <ExpandMore />}
+          </ListItem>
 
-        <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem button className={classes.nested}>
-              {this.state.repos.map(this.renderReposList)}
-            </ListItem>
-          </List>
-        </Collapse>
-      </List>
+          <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              <ListItem button className={classes.nested}>
+                {this.state.repos.map(this.renderReposList)}
+              </ListItem>
+            </List>
+          </Collapse>
+        </List>
       </div>
     );
   }

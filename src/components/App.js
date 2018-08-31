@@ -1,13 +1,12 @@
-import "./App.css";
 import React, { Component } from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import SearchIcon from '@material-ui/icons/Search';
-// import LoadingSpinner from "../LoadingSpinner";
 import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
-import { fetchUser, fetchRepo } from './../actions/actions.js';
+import { apiUser, apiRepo } from './../actions/actions';
 import { bindActionCreators } from 'redux';
+import User from './User';
 
 class App extends Component {
   constructor(props) {
@@ -17,10 +16,12 @@ class App extends Component {
   }
 
   onFetchUser(e) {
-    this.props.onFetchUser(e.target.value);
+    e.preventDefault();
+    this.props.onFetchUser(e.target.name.value);
   }
 
   render() {
+    const userComponent = this.props.user ? <User user={this.props.user} /> : null;
     return (
       <div className="container">
         <Typography className="App-title" gutterBottom variant="display3" align="center">
@@ -33,6 +34,7 @@ class App extends Component {
         <form onSubmit={this.onFetchUser}>
           <TextField
             id="name"
+            name="name"
             label="Search Username"
             className="nameInput"
             type="search"
@@ -42,7 +44,7 @@ class App extends Component {
             <SearchIcon />
           </IconButton>
         </form>
-        {/* {loading ? <LoadingSpinner /> : user.id != null ? <User user={user} /> : <span></span>} */}
+        {userComponent}
       </div>
     )
   }
@@ -50,8 +52,8 @@ class App extends Component {
 
 const mapActionsToProps = (dispatch, props) => {
   return bindActionCreators({
-  onFetchUser: fetchUser,
-  onFetchRepo: fetchRepo
+  onFetchUser: apiUser,
+  onFetchRepo: apiRepo
   }, dispatch)
 };
 
