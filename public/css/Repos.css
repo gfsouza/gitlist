@@ -8,3 +8,19 @@
 .repo-listItems a {
   border-bottom: inset rgba(0, 0, 0, 0.2);
 }
+
+.list-root {
+  max-width: 93vw;
+  width: 100%;
+  background-color: white;
+  margin: 0 auto;
+}
+
+.list-nested {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  max-height: 275;
+  overflow: auto;
+  margin: 0 auto;
+}

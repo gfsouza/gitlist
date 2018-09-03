@@ -8,27 +8,9 @@ import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
 import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
-import { withStyles } from '@material-ui/core/styles';
+import OpenInNew from '@material-ui/icons/OpenInNew';
 import { apiRepo } from '../actions/repo-actions';
-import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-
-const styles = theme => ({
-  root: {
-    maxWidth: '93vw',
-    width: '100%',
-    backgroundColor: theme.palette.background.paper,
-    margin: '0 auto',
-  },
-  nested: {
-    width: '100%',
-    display: 'flex',
-    flexDirection: 'column',
-    maxHeight: 275,
-    overflow: 'auto',
-    margin: '0 auto',
-  },
-});
 
 class Repos extends Component {
   state = {
@@ -40,19 +22,33 @@ class Repos extends Component {
   }
 
   componentDidMount = () => {
-    this.onFetchRepo();
+    debugger;
+    this.props.fetchRepo(this.props.user.login);
   };
 
   componentDidUpdate = (prevProps) => {
     if (this.props.user.login !== prevProps.user.login)
-      this.onFetchRepo();
+      this.props.fetchRepo(this.props.user.login);
   };
 
+  renderReposList = (repos, i) => {
+    debugger;
+    return (
+    <div key={i} className="repo-listItems">
+      <ListItem component="a" target="_blank" href={repos.html_url} button>
+        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repos.name} />
+        <ListItemIcon>
+          <OpenInNew />
+        </ListItemIcon>
+      </ListItem>
+    </div>
+    );
+  }
+
   render() {
-    const { classes } = this.props;
-    
+    debugger;
     return(
-      <div className={classes.root}>
+      <div className="list-root">
         <List component="nav" style={{width:'100%'}}>
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
@@ -64,8 +60,8 @@ class Repos extends Component {
 
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
-              <ListItem button className={classes.nested}>
-                {this.props.repos.map(this.renderReposList)}
+              <ListItem button className="list-nested">
+              {this.renderReposList()}
               </ListItem>
             </List>
           </Collapse>
@@ -76,21 +72,25 @@ class Repos extends Component {
 }
 
 Repos.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
-const mapActionsToProps = (dispatch, props) => {
-  return bindActionCreators({
-  onFetchRepo: apiRepo,
-  }, dispatch)
+  fetchRepo: PropTypes.func.isRequired,
+  repos: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired,
+  actions: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state, props) => {
+  debugger
   return {
-    repo: state.repo,
-  }
+    repos: state.repos,
+    user: state.user
+  };
 };
 
-export const RepoConnect = connect(mapStateToProps, mapActionsToProps)(Repos);
+const mapDispatchToProps = (dispatch) => {
+  debugger
+  return {
+    fetchRepo: (user) => dispatch(apiRepo(user))
+  };
+};
 
-export default withStyles(styles)(Repos);
+export default connect(mapStateToProps, mapDispatchToProps)(Repos);

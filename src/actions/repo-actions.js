@@ -1,21 +1,22 @@
 import { FETCH_REPO } from './types';
 import axios from 'axios';
-import RepoConnect from './../components/Repos';
 
 const apiUrl = 'https://api.github.com/users/';
 
-export function fetchRepo(user) {
+export function fetchRepo(repos) {
     return {
       type: FETCH_REPO,
-      repo: user.name
+      repos: repos
     }
 };
 
-  export const apiRepo = user => {
+  export function apiRepo(user) {
+    debugger
     return (dispatch) => {
-      return axios.get(`${apiUrl}${user}/repos`)
+      axios.get(`${apiUrl}${user}/repos`)
       .then(response => {
         dispatch(fetchRepo(response.data))
+        return response;
       })
       .catch(function(error) {
         if (error.response) {
@@ -30,15 +31,4 @@ export function fetchRepo(user) {
         console.log(error.config);
       });
     };
-  };
-
-  export const renderReposList = (repository, i) => {
-    return <div key={repository.id} className="repo-listItems">
-      <ListItem component="a" target="_blank" href={repository.html_url} button>
-        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repository.name} />
-        <ListItemIcon>
-          <OpenInNew />
-        </ListItemIcon>
-      </ListItem>
-    </div>
   };
