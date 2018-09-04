@@ -13,8 +13,10 @@ import { apiRepo } from '../actions/repo-actions';
 import { connect } from 'react-redux';
 
 class Repos extends Component {
+
   state = {
-    open: true
+    open: true,
+    repos: null
   }
 
   handleClick = () => {
@@ -22,7 +24,6 @@ class Repos extends Component {
   }
 
   componentDidMount = () => {
-    debugger;
     this.props.fetchRepo(this.props.user.login);
   };
 
@@ -32,7 +33,6 @@ class Repos extends Component {
   };
 
   renderReposList = (repos, i) => {
-    debugger;
     return (
     <div key={i} className="repo-listItems">
       <ListItem component="a" target="_blank" href={repos.html_url} button>
@@ -46,7 +46,6 @@ class Repos extends Component {
   }
 
   render() {
-    debugger;
     return(
       <div className="list-root">
         <List component="nav" style={{width:'100%'}}>
@@ -61,7 +60,7 @@ class Repos extends Component {
           <Collapse in={this.state.open} timeout="auto" unmountOnExit>
             <List component="div" disablePadding>
               <ListItem button className="list-nested">
-              {this.renderReposList()}
+                {this.props.repos.map(this.renderReposList)}
               </ListItem>
             </List>
           </Collapse>
@@ -75,19 +74,20 @@ Repos.propTypes = {
   fetchRepo: PropTypes.func.isRequired,
   repos: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
-  actions: PropTypes.object.isRequired
+};
+
+Repos.defaultProps = {
+  repos: []
 };
 
 const mapStateToProps = (state, props) => {
-  debugger
   return {
-    repos: state.repos,
-    user: state.user
+    repos: state.repoReducer.repos,
+    user: state.userReducer.user
   };
 };
 
 const mapDispatchToProps = (dispatch) => {
-  debugger
   return {
     fetchRepo: (user) => dispatch(apiRepo(user))
   };

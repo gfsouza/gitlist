@@ -5,13 +5,15 @@ import registerServiceWorker from './registerServiceWorker';
 
 import thunk from 'redux-thunk';
 import userReducer from './reducers/userReducer'
-import { applyMiddleware, createStore, compose } from 'redux';
+import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import repoReducer from './reducers/repoReducer';
 
 const store = createStore(
-  userReducer,
-  repoReducer,
+  combineReducers({
+    userReducer,
+    repoReducer,
+  }),
   compose(
   applyMiddleware(thunk),
   window.devToolsExtension ? window.devToolsExtension() : f => f

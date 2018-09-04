@@ -10,13 +10,11 @@ export function fetchRepo(repos) {
     }
 };
 
-  export function apiRepo(user) {
-    debugger
+  export const apiRepo = user => {
     return (dispatch) => {
-      axios.get(`${apiUrl}${user}/repos`)
+      return axios.get(`${apiUrl}${user}/repos`)
       .then(response => {
-        dispatch(fetchRepo(response.data))
-        return response;
+        dispatch(fetchRepo(response.data));
       })
       .catch(function(error) {
         if (error.response) {

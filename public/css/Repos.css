@@ -20,7 +20,7 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  max-height: 275;
+  max-height: 275px;
   overflow: auto;
   margin: 0 auto;
 }
