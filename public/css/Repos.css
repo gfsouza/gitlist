@@ -9,11 +9,19 @@
   border-bottom: inset rgba(0, 0, 0, 0.2);
 }
 
-.list-root {
+.repo-listItems .repo-listText {
+  text-align: center;
+  padding: none;
+}
+
+.list-root, nav {
   max-width: 93vw;
   width: 100%;
-  background-color: white;
   margin: 0 auto;
+}
+
+.list-root .repo-listText {
+  text-align: center;
 }
 
 .list-nested {
@@ -24,3 +32,4 @@
   overflow: auto;
   margin: 0 auto;
 }
+

@@ -15,8 +15,8 @@ const store = createStore(
     repoReducer,
   }),
   compose(
-  applyMiddleware(thunk),
-  window.devToolsExtension ? window.devToolsExtension() : f => f
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
   )
 );
 

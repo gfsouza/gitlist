@@ -34,26 +34,26 @@ class Repos extends Component {
 
   renderReposList = (repos, i) => {
     return (
-    <div key={i} className="repo-listItems">
-      <ListItem component="a" target="_blank" href={repos.html_url} button>
-        <ListItemText style={{textAlign:'center', padding:'none'}} inset primary={repos.name} />
-        <ListItemIcon>
-          <OpenInNew />
-        </ListItemIcon>
-      </ListItem>
-    </div>
+      <div key={i} className="repo-listItems">
+        <ListItem component="a" target="_blank" href={repos.html_url} button>
+          <ListItemText className="repo-listText" inset primary={repos.name} />
+          <ListItemIcon>
+            <OpenInNew />
+          </ListItemIcon>
+        </ListItem>
+      </div>
     );
   }
 
   render() {
-    return(
+    return (
       <div className="list-root">
-        <List component="nav" style={{width:'100%'}}>
+        <List component="nav">
           <ListItem button onClick={this.handleClick}>
             <ListItemIcon>
               <Folder />
             </ListItemIcon>
-            <ListItemText style={{textAlign:'center'}} inset primary={`Public Repos (${this.props.user.public_repos})`} />
+            <ListItemText className="repo-listItems" inset primary={`Public Repos (${this.props.user.public_repos})`} />
             {this.state.open ? <ExpandLess /> : <ExpandMore />}
           </ListItem>
 

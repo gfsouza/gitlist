@@ -39,7 +39,7 @@ class App extends Component {
             className="nameInput"
             type="search"
             margin="normal"
-            />
+          />
           <IconButton className="search-icon" onClick={this.onFetchUser}>
             <SearchIcon />
           </IconButton>
@@ -52,7 +52,7 @@ class App extends Component {
 
 const mapActionsToProps = (dispatch, props) => {
   return bindActionCreators({
-  onFetchUser: apiUser,
+    onFetchUser: apiUser,
   }, dispatch)
 };
 

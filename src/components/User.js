@@ -6,7 +6,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import Typography from '@material-ui/core/Typography';
 
 export const User = props => {
-  const {user} = props;
+  const { user } = props;
   return (
     <div className="userInfo">
       <Card className="userCard">
@@ -17,14 +17,14 @@ export const User = props => {
           </Typography>
           <div className="userSubheading">
             <Typography gutterBottom variant="subheading" >
-              Followers: { user.followers }
+              Followers: {user.followers}
             </Typography>
             <Typography gutterBottom variant="subheading" >
-              Following: { user.following }
+              Following: {user.following}
             </Typography>
           </div>
         </CardContent>
-        <Repos user={user}/>
+        <Repos user={user} />
       </Card>
     </div>
   )
