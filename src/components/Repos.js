@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -12,7 +12,7 @@ import OpenInNew from '@material-ui/icons/OpenInNew';
 import { apiRepo } from '../actions/repo-actions';
 import { connect } from 'react-redux';
 
-class Repos extends Component {
+class Repos extends PureComponent {
 
   state = {
     open: true,
@@ -80,16 +80,16 @@ Repos.defaultProps = {
   repos: []
 };
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    fetchRepo: (user) => dispatch(apiRepo(user))
+  };
+};
+
 const mapStateToProps = (state, props) => {
   return {
     repos: state.repoReducer.repos,
     user: state.userReducer.user
-  };
-};
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchRepo: (user) => dispatch(apiRepo(user))
   };
 };
 

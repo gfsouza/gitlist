@@ -5,13 +5,12 @@ import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { apiUser } from '../actions/user-actions';
-import { bindActionCreators } from 'redux';
 import User from './User';
 
 class App extends Component {
+  
   constructor(props) {
     super(props);
-
     this.onFetchUser = this.onFetchUser.bind(this);
   }
 
@@ -50,10 +49,10 @@ class App extends Component {
   }
 }
 
-const mapActionsToProps = (dispatch, props) => {
-  return bindActionCreators({
-    onFetchUser: apiUser,
-  }, dispatch)
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onFetchUser: (user) => dispatch(apiUser(user))
+  }
 };
 
 const mapStateToProps = (state, props) => {
@@ -62,4 +61,4 @@ const mapStateToProps = (state, props) => {
   }
 };
 
-export default connect(mapStateToProps, mapActionsToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(App);

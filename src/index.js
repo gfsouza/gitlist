@@ -4,9 +4,9 @@ import App from './components/App';
 import registerServiceWorker from './registerServiceWorker';
 
 import thunk from 'redux-thunk';
-import userReducer from './reducers/userReducer'
 import { applyMiddleware, createStore, compose, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
+import userReducer from './reducers/userReducer';
 import repoReducer from './reducers/repoReducer';
 
 const store = createStore(
