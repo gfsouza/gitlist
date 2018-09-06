@@ -1,31 +1,37 @@
-import { FETCH_USER } from './types';
+import { FETCH_USER_SUCCESS, FETCH_USER_REQUEST, FETCH_USER_ERROR } from './types';
 import axios from 'axios';
 import { apiUrl } from './../components/apiUrl';
 
-export function fetchUser(user) {
+function receiveUser(user) {
   return {
-    type: FETCH_USER,
+    type: FETCH_USER_SUCCESS,
     user: user
   }
-};
+}
 
-export const apiUser = user => {
-  return (dispatch) => {
+function requestUser(user) {
+  return {
+    type: FETCH_USER_REQUEST,
+    user
+  }
+}
+
+function missingUser(message) {
+  return {
+    type: FETCH_USER_ERROR,
+    message: message || 'Something went wrong, please try again.'
+  }
+}
+
+export function apiUser(user) {
+  return dispatch => {
+    dispatch(requestUser(user))
     return axios.get(`${apiUrl}${user}`)
       .then(response => {
-        dispatch(fetchUser(response.data));
-      })
-      .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
-        }
-        console.log(error.config);
-      });
+        dispatch(receiveUser(response.data));
+      },
+        error => {
+          dispatch(missingUser(error.response.data.message));
+        });
   };
 };

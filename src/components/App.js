@@ -6,9 +6,11 @@ import Typography from '@material-ui/core/Typography';
 import { connect } from 'react-redux';
 import { apiUser } from '../actions/user-actions';
 import User from './User';
+import LoadingSpinner from './LoadingSpinner';
+import { FetchError } from './fetchError';
 
 class App extends Component {
-  
+
   constructor(props) {
     super(props);
     this.onFetchUser = this.onFetchUser.bind(this);
@@ -20,7 +22,12 @@ class App extends Component {
   }
 
   render() {
-    const userComponent = this.props.user ? <User user={this.props.user} /> : null;
+    const { loading, user, message } = this.props;
+    if (message && !user) {
+      return (
+        <FetchError message={message} />
+      );
+    }
     return (
       <div className="container">
         <Typography className="App-title" gutterBottom variant="display3" align="center">
@@ -43,7 +50,7 @@ class App extends Component {
             <SearchIcon />
           </IconButton>
         </form>
-        {userComponent}
+        {loading ? <LoadingSpinner /> : user != null ? <User user={user} /> : <span></span>}
       </div>
     )
   }
@@ -55,9 +62,11 @@ const mapDispatchToProps = (dispatch) => {
   }
 };
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   return {
     user: state.userReducer.user,
+    loading: state.userReducer.loading,
+    message: state.userReducer.message
   }
 };
 
