@@ -1,31 +1,31 @@
-import { FETCH_REPO } from './types';
+import { FETCH_REPO_SUCCESS, FETCH_REPO_ERROR } from './types';
 import axios from 'axios';
 import { apiUrl } from './../components/apiUrl';
 
-export function fetchRepo(repos) {
+export function receiveRepos(repos) {
   return {
-    type: FETCH_REPO,
+    type: FETCH_REPO_SUCCESS,
     repos: repos
   }
 };
 
-export const apiRepo = user => {
-  return (dispatch) => {
+export function missingRepos(message) {
+  return {
+    type: FETCH_REPO_ERROR,
+    message: message || 'Something went wrong, please try again.'
+  }
+};
+
+export function apiRepo(user) {
+  return dispatch => {
     return axios.get(`${apiUrl}${user}/repos`)
-      .then(response => {
-        dispatch(fetchRepo(response.data));
-      })
-      .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data);
-          console.log(error.response.status);
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log(error.request);
-        } else {
-          console.log('Error', error.message);
+      .then(
+        response => {
+          dispatch(receiveRepos(response.data));
+        },
+        error => {
+          dispatch(missingRepos(error.response.data.message));
         }
-        console.log(error.config);
-      });
+      );
   };
 };

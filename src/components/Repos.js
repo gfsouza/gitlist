@@ -24,12 +24,12 @@ class Repos extends PureComponent {
   }
 
   componentDidMount = () => {
-    this.props.fetchRepo(this.props.user.login);
+    this.props.receiveRepos(this.props.user.login);
   };
 
   componentDidUpdate = (prevProps) => {
     if (this.props.user.login !== prevProps.user.login)
-      this.props.fetchRepo(this.props.user.login);
+      this.props.receiveRepos(this.props.user.login);
   };
 
   renderReposList = (repos, i) => {
@@ -71,7 +71,7 @@ class Repos extends PureComponent {
 }
 
 Repos.propTypes = {
-  fetchRepo: PropTypes.func.isRequired,
+  receiveRepos: PropTypes.func.isRequired,
   repos: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
 };
@@ -82,14 +82,15 @@ Repos.defaultProps = {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    fetchRepo: (user) => dispatch(apiRepo(user))
+    receiveRepos: (user) => dispatch(apiRepo(user))
   };
 };
 
-const mapStateToProps = (state, props) => {
+const mapStateToProps = (state) => {
   return {
     repos: state.repoReducer.repos,
-    user: state.userReducer.user
+    user: state.userReducer.user,
+    message: state.repoReducer.message
   };
 };
 

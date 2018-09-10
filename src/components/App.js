@@ -23,11 +23,6 @@ class App extends Component {
 
   render() {
     const { loading, user, message } = this.props;
-    if (message && !user) {
-      return (
-        <FetchError message={message} />
-      );
-    }
     return (
       <div className="container">
         <Typography className="App-title" gutterBottom variant="display3" align="center">
@@ -42,7 +37,6 @@ class App extends Component {
             id="name"
             name="name"
             label="Search Username"
-            className="nameInput"
             type="search"
             margin="normal"
           />
@@ -50,7 +44,10 @@ class App extends Component {
             <SearchIcon />
           </IconButton>
         </form>
-        {loading ? <LoadingSpinner /> : user != null ? <User user={user} /> : <span></span>}
+        {loading ? <LoadingSpinner /> :
+          user != null ? <User user={user} /> :
+            message != null ? <FetchError message={message} /> :
+              <span></span>}
       </div>
     )
   }
