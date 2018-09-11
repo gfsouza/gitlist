@@ -89,8 +89,7 @@ const mapDispatchToProps = (dispatch) => {
 const mapStateToProps = (state) => {
   return {
     repos: state.repoReducer.repos,
-    user: state.userReducer.user,
-    message: state.repoReducer.message
+    user: state.userReducer.user
   };
 };
 
